@@ -18,10 +18,16 @@ class App extends Component {
       address: "Olivos, Buenos Aires Provincia, Argentina",
       web: "spqrod.dev",
       email: "dev@google.com",
+      educationItems: [{
+        degree: "Computer Science B. A.",
+        university: "University of Mos Eisley",
+        years: "2018-2022",
+      },
+    ]
     }
   }
   render() {
-    const { name, position, profile, address, phone, web, email } = this.state;
+    const { name, position, profile, address, phone, web, email, educationItems } = this.state;
     return (
     <div>
       <h1>Create your CV</h1>
@@ -29,7 +35,7 @@ class App extends Component {
       <Photo />
       <ProfileSection profile = {profile}/>
       <ContactSection address = {address} phone = {phone} web = {web} email = {email}/>
-      <EducationSection />
+      <EducationSection educationItems = {educationItems}/>
       <ExperienceSection />
     </div>
 )}}
