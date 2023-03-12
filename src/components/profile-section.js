@@ -1,16 +1,28 @@
 import React, { Component } from "react";
+import { handleElementClick, handleElementChange, handleElementKeyDown, hideElement } from "../text-input-swap-script";
 
 class Profile extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.state = {
+            profile: this.props.profile
+        }
+    }
+    componentDidMount() {
+        hideElement("profileInputField");
+    }
+    updateStateAfterElementChange(e) { 
+        const { key, value } = handleElementChange(e);
+        this.setState({
+            [key]: value
+        });
     }
     render() {
         return (
             <div>
                 <h2>Profile</h2>
-                <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
+                <p id="profileTextField" onClick={(e) => handleElementClick(e)}>{this.state.profile}</p>
+                <textarea id="profileInputField" onBlur={(e) => this.updateStateAfterElementChange(e)} onKeyUp={e => handleElementKeyDown(e)} defaultValue={this.state.profile} />
             </div>
         );
     }

@@ -1,5 +1,7 @@
 import { type } from "@testing-library/user-event/dist/type";
 import React, { Component } from "react";
+import { handleElementClick, handleElementChange, handleElementKeyDown, hideElement } from "../text-input-swap-script";
+
 
 class Name extends Component {
     constructor(props) {
@@ -11,60 +13,26 @@ class Name extends Component {
 
     }
 
-    handleElementClick(e) {
-        const elementID = e.target.id;
-        this.hideElement(elementID);
-        let newElementID = "";
-        if (elementID.includes("TextField")) {
-            newElementID = elementID.replace(/TextField/, "InputField");
-        } else {
-            newElementID = elementID.replace(/InputField/, "TextField");
-        }
-        this.revealElement(newElementID);
-    }
-
-    handleElementChange(e) {
-        this.handleElementClick(e);
-            let key = e.target.id;
-            key = key.replace(/InputField/, "");
-            key = key.replace(/TextField/, "");
-            this.setState({
-                [key]: e.target.value
-            });
-    }
-    
-    handleElementKeyDown(e) {
-        if (e.key === "Enter") {
-            e.target.blur();
-        }
-    }
-
-    hideElement(elementID) {
-        const element = document.getElementById(elementID);
-        element.style.display = "none";
-    }
-    
-    revealElement(elementID) {
-        const element = document.getElementById(elementID);
-        element.style.display = "block";
-        if (element.tagName) {
-            element.focus();
-        }
-    }
-
     componentDidMount() {
-        this.hideElement("nameInputField");
-        this.hideElement("positionInputField");
+        hideElement("nameInputField");
+        hideElement("positionInputField");
+    }
+
+    updateStateAfterElementChange(e) { 
+        const { key, value } = handleElementChange(e);
+        this.setState({
+            [key]: value
+        });
     }
 
     render() {
 
         return (
             <div>
-                <h1 id="nameTextField" onClick={(e) => this.handleElementClick(e)}>{this.state.name}</h1>
-                <input id="nameInputField" onBlur={(e) => this.handleElementChange(e)} onKeyUp={e => this.handleElementKeyDown(e)} defaultValue={this.state.name} />
-                <h3 id="positionTextField" onClick={(e) => this.handleElementClick(e)}>{this.state.position}</h3>
-                <input id="positionInputField" onBlur={(e) => this.handleElementChange(e)} onKeyUp={e => this.handleElementKeyDown(e)} defaultValue={this.state.position} />
+                <h1 id="nameTextField" onClick={(e) => handleElementClick(e)}>{this.state.name}</h1>
+                <input id="nameInputField" onBlur={(e) => this.updateStateAfterElementChange(e)} onKeyUp={e => handleElementKeyDown(e)} defaultValue={this.state.name} />
+                <h3 id="positionTextField" onClick={(e) => handleElementClick(e)}>{this.state.position}</h3>
+                <input id="positionInputField" onBlur={(e) => this.updateStateAfterElementChange(e)} onKeyUp={e => handleElementKeyDown(e)} defaultValue={this.state.position} />
             </div>
         );
     }
