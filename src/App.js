@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+// import './App.css';
+import ProfileSection from './components/profile-section.js';
+import Name from './components/name.js';
+import Photo from './components/photo.js';
+import ContactSection from './components/contact-section.js';
+import EducationSection from './components/education-section.js';
+import ExperienceSection from './components/experience-section.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      name: "Obi-Wan Kenobi",
+      position: "General Director"
+    }
+  }
+  render() {
+    const { name, position } = this.state;
+    return (
+    <div>
+      <h1>Create your CV</h1>
+      <Name name={name} position={position}/>
+      <Photo />
+      <ProfileSection />
+      <ContactSection />
+      <EducationSection />
+      <ExperienceSection />
     </div>
-  );
-}
+)}}
 
 export default App;
